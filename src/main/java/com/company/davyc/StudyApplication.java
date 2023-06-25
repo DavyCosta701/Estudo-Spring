@@ -23,14 +23,16 @@ import java.util.List;
         return args ->{
             clientes.salvarCliente(new Cliente("Jorge"));
             clientes.salvarCliente(new Cliente("JorgeDois"));
+            clientes.buscaCliente(3).forEach(System.out::println);
             //clientes.deletaCliente(2);
-            clientes.buscaCliente(2).forEach(System.out::println);
+            //clientes.buscaCliente(2).forEach(System.out::println);
+            List <Cliente> listCliente = clientes.listaCliente();
+            listCliente.forEach(cliente -> cliente.setNome(cliente.getNome() + " UPDT"));
+            listCliente.forEach(clientes::updateCliente);
+            clientes.listaCliente().forEach(System.out::println);
 
         };
     }
-
-    @Value("${spring.application.name}")
-    private String applicationName;
 
     @GetMapping("/")
     public String startPage(){
