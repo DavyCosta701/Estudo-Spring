@@ -1,26 +1,26 @@
 package com.company.davyc.domain.entity;
 
+import jakarta.persistence.*;
+
+import java.util.List;
+
+@Entity
+@Table(name = "item_pedido")
 public class ItemPedido {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer ID;
-    private Integer Pedido_ID;
-    private Integer Produto_ID;
+    @ManyToOne
+    @JoinColumn(name = "PEDIDO_ID")
+    private Pedido pedido;
+    @ManyToOne
+    @JoinColumn(name = "PRODUTO_ID")
+    private Produto produto;
     private Integer Quantidade;
 
+
     public ItemPedido() {
-    }
-
-    public ItemPedido(Integer pedido_ID, Integer produto_ID, Integer quantidade) {
-        Pedido_ID = pedido_ID;
-        Produto_ID = produto_ID;
-        Quantidade = quantidade;
-    }
-
-    public ItemPedido(Integer ID, Integer pedido_ID, Integer produto_ID, Integer quantidade) {
-        this.ID = ID;
-        Pedido_ID = pedido_ID;
-        Produto_ID = produto_ID;
-        Quantidade = quantidade;
     }
 
     public Integer getID() {
@@ -31,20 +31,25 @@ public class ItemPedido {
         this.ID = ID;
     }
 
-    public Integer getPedido_ID() {
-        return Pedido_ID;
+    public ItemPedido(Integer ID, Pedido pedido, Produto produto, Integer quantidade) {
+        this.ID = ID;
+        this.pedido = pedido;
+        this.produto = produto;
+        Quantidade = quantidade;
     }
 
-    public void setPedido_ID(Integer pedido_ID) {
-        Pedido_ID = pedido_ID;
+    public ItemPedido(Pedido pedido, Produto produto, Integer quantidade) {
+        this.pedido = pedido;
+        this.produto = produto;
+        Quantidade = quantidade;
     }
 
-    public Integer getProduto_ID() {
-        return Produto_ID;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setProduto_ID(Integer produto_ID) {
-        Produto_ID = produto_ID;
+    public Produto getProduto() {
+        return produto;
     }
 
     public Integer getQuantidade() {

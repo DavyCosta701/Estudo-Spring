@@ -1,12 +1,31 @@
 package com.company.davyc.domain.entity;
 
-import java.math.BigDecimal;
+import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+import java.util.List;
+
+@Entity
+@Table(name = "produto")
 public class Produto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer ID;
     private String Descricao;
+    @Column(length = 20, precision = 2)
     private BigDecimal Preco_Unitario;
+
+    public List<ItemPedido> getItensPedido() {
+        return itensPedido;
+    }
+
+    public void setItensPedido(List<ItemPedido> itensPedido) {
+        this.itensPedido = itensPedido;
+    }
+
+    @OneToMany(mappedBy = "produto")
+    private List<ItemPedido> itensPedido;
 
     public Integer getID() {
         return ID;

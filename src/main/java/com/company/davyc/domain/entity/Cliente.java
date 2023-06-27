@@ -1,39 +1,65 @@
 package com.company.davyc.domain.entity;
 
-public class Cliente {
-    private Integer ID;
-    private String Nome;
 
-    public Integer getID() {
+import jakarta.persistence.*;
+
+import java.util.Set;
+
+@Entity
+@Table(name = "cliente")
+
+public class Cliente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer ID;
+    @Column(length = 100)
+    private String NOME;
+    @OneToMany(mappedBy = "cliente")
+    private Set<Pedido> pedidos;
+
+
+    public Integer getid() {
         return ID;
     }
 
-    public void setID(Integer ID) {
-        this.ID = ID;
+    public Set<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(Set<Pedido> pedidos) {
+        this.pedidos = pedidos;
+    }
+
+    public void setid(Integer id) {
+        this.ID = id;
     }
 
     public String getNome() {
-        return Nome;
+        return NOME;
     }
 
     public void setNome(String nome) {
-        Nome = nome;
+        NOME = nome;
     }
 
     public Cliente() {
     }
 
-    public Cliente(Integer ID, String nome) {
-        this.ID = ID;
-        Nome = nome;
+    public Cliente(Integer id, String nome) {
+        this.ID = id;
+        NOME = nome;
     }
 
     public Cliente(String nome) {
-        Nome = nome;
+        NOME = nome;
     }
 
     @Override
     public String toString() {
-        return ID + " "  + Nome;
+        return "Cliente{" +
+                "ID=" + ID +
+                ", NOME='" + NOME + '\'' +
+                ", pedidos=" + pedidos +
+                '}';
     }
 }

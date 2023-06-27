@@ -1,15 +1,35 @@
 package com.company.davyc.domain.entity;
 
+import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
+@Entity
+@Table(name = "pedido")
 public class Pedido {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer ID;
-    private Integer Cliente_ID;
+    @ManyToOne
+    @JoinColumn(name = "CLIENTE_ID")
+    private Cliente cliente;
     private LocalDate Data_Pedido;
+    @Column(precision = 20, scale = 2)
     private BigDecimal Total;
+    @OneToMany(mappedBy = "pedido")
+    private List<ItemPedido> itensPedido;
+
+    public List<ItemPedido> getItensPedido() {
+        return itensPedido;
+    }
+
+    public void setItensPedido(List<ItemPedido> itensPedido) {
+        this.itensPedido = itensPedido;
+    }
 
     public Integer getID() {
         return ID;
@@ -19,12 +39,12 @@ public class Pedido {
         this.ID = ID;
     }
 
-    public Integer getCliente_ID() {
-        return Cliente_ID;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setCliente_ID(Integer cliente_ID) {
-        Cliente_ID = cliente_ID;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
     public LocalDate getData_Pedido() {
@@ -46,16 +66,24 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Integer ID, Integer cliente_ID, LocalDate data_Pedido, BigDecimal total) {
+    public Pedido(Integer ID, Cliente cliente, LocalDate data_Pedido, BigDecimal total) {
         this.ID = ID;
-        Cliente_ID = cliente_ID;
+        this.cliente = cliente;
         Data_Pedido = data_Pedido;
         Total = total;
     }
 
-    public Pedido(Integer cliente_ID, LocalDate data_Pedido, BigDecimal total) {
-        Cliente_ID = cliente_ID;
+    public Pedido(Cliente cliente, LocalDate data_Pedido, BigDecimal total) {
+        this.cliente = cliente;
         Data_Pedido = data_Pedido;
         Total = total;
+    }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "Data_Pedido=" + Data_Pedido +
+                ", Total=" + Total +
+                '}';
     }
 }

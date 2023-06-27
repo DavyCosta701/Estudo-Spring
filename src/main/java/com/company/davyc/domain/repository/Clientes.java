@@ -1,30 +1,24 @@
 package com.company.davyc.domain.repository;
 
 import com.company.davyc.domain.entity.Cliente;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class Clientes {
+public class Clientes{
 
-    private final String INSERT = "Insert into CLIENTE (nome) values (?)";
+// JDBC //
+/*  private final String INSERT = "Insert into CLIENTE (nome) values (?)";
     private final String SELECT_ALL = "Select * from Cliente";
     private final String SEARCH_ID = "SELECT * FROM Cliente WHERE ID = ?";
     private final String SEARCH_NOME = "SELECT * FROM Cliente WHERE NOME LIKE ? ";
     private final String DELETE = "DELETE FROM Cliente WHERE ID = ?";
     private final String UPDATE = "UPDATE Cliente set NOME = ? WHERE ID = ?";
-
-    private final JdbcTemplate jdbcTemplate;
-
-    public Clientes(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     public Cliente salvarCliente(Cliente cliente){
         jdbcTemplate.update(INSERT, new Object[] {cliente.getNome()});
@@ -80,7 +74,54 @@ public class Clientes {
 
     public void updateCliente(Cliente cliente){
 
-        jdbcTemplate.update(UPDATE, cliente.getNome(), cliente.getID());
+        jdbcTemplate.update(UPDATE, cliente.getNome(), cliente.getid());
+
+    }*/
+
+    private final EntityManager entityManager;
+
+    private final JdbcTemplate jdbcTemplate;
+
+    public Clientes(JdbcTemplate jdbcTemplate, EntityManager entityManager) {
+        this.jdbcTemplate = jdbcTemplate;
+        this.entityManager = entityManager;
+    }
+// JPA //
+
+    @Transactional
+    public Cliente salvarCliente(Cliente cliente){
+        entityManager.persist(cliente);
+        return cliente;
+    }
+
+    @Transactional
+    public List<Cliente> listaCliente(){
+        String jpql = "from Cliente";
+        return entityManager.createQuery(jpql, Cliente.class).getResultList();
+    }
+
+    @Transactional
+    public Cliente updateCliente(Cliente cliente){
+        entityManager.merge(cliente);
+        return cliente;
+    }
+    @Transactional
+    public void deletaCliente(Cliente cliente){
+        entityManager.remove(cliente);
+    }
+    @Transactional
+    public void deletaCliente(Integer id){
+        Cliente cliente = entityManager.find(Cliente.class, id);
+        entityManager.remove(cliente);
+    }
+
+    @Transactional
+    public List<Cliente> buscaCliente(String nome){
+        String jpql = "select c from Cliente c where c.NOME like :nome";
+        TypedQuery<Cliente> query = entityManager.createQuery(jpql, Cliente.class);
+        query.setParameter("nome", "%" + nome + "%");
+        return query.getResultList();
 
     }
+
 }
