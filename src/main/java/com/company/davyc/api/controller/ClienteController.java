@@ -2,6 +2,7 @@ package com.company.davyc.api.controller;
 
 import com.company.davyc.domain.entity.Cliente;
 import com.company.davyc.domain.repository.ClientesSD;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class ClienteController {
 
     @PostMapping("/post/Cliente/")
     @ResponseStatus(HttpStatus.CREATED)
-    public Cliente saveCliente(@RequestBody Cliente cliente){
+    public Cliente saveCliente(@RequestBody @Valid Cliente cliente){
         return clientesSD.save(cliente);
 
     }
@@ -45,7 +46,7 @@ public class ClienteController {
     @PutMapping("/put/Cliente/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public Cliente updateCliente(@PathVariable Integer id,
-                                 @RequestBody Cliente cliente){
+                                 @RequestBody @Valid  Cliente cliente){
         return clientesSD.findById(id).map(cliente1 -> {
             cliente.setID(cliente1.getID());
             clientesSD.save(cliente);

@@ -2,6 +2,7 @@ package com.company.davyc.api.controller;
 
 import com.company.davyc.domain.entity.Produto;
 import com.company.davyc.domain.repository.ProdutoSD;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.http.HttpStatus;
@@ -28,13 +29,13 @@ public class ProdutoController {
 
     @PostMapping("/post/Produto")
     @ResponseStatus(HttpStatus.CREATED)
-    public Produto inserirProduto(@RequestBody Produto produto){
+    public Produto inserirProduto(@RequestBody @Valid Produto produto){
         return produtoSD.save(produto);
     }
 
     @PutMapping("/put/Produto/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizaProduto(@RequestBody Produto produto, @PathVariable Integer id){
+    public void atualizaProduto(@RequestBody @Valid Produto produto, @PathVariable Integer id){
         produtoSD.findById(id).map(produto1 -> {
             produto.setID(produto1.getID());
             return produtoSD.save(produto);

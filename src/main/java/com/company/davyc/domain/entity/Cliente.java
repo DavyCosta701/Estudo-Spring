@@ -3,10 +3,10 @@ package com.company.davyc.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
+import org.hibernate.validator.constraints.br.CPF;
 
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -24,8 +24,10 @@ public class Cliente implements ClienteInterface {
     private Integer ID;
 
     @Column(length = 100)
+    @NotEmpty(message = "campo.codigo-cliente.obrigatorio")
     private String NOME;
     @Column(name = "cpf", length = 11)
+    @CPF(message = "{}")
     private String cpf;
 
     public Cliente(String NOME, String cpf) {

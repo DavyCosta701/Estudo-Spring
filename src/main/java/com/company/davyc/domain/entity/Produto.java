@@ -3,6 +3,8 @@ package com.company.davyc.domain.entity;
 import com.company.davyc.domain.enums.StatusPedido;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -21,7 +23,9 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer ID;
     @Column(name = "descricao")
+    @NotEmpty(message = "Erro de validação, descrição não pode ser nulo")
     private String Descricao;
+    @NotNull(message = "Preço vazio")
     @Column(name = "preco_unitario",length = 2, precision = 20)
     private BigDecimal Preco_Unitario;
     @JsonIgnore
