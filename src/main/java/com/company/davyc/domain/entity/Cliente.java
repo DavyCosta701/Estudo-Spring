@@ -1,65 +1,43 @@
 package com.company.davyc.domain.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.proxy.HibernateProxy;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "cliente")
 
-public class Cliente {
+
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+public class Cliente implements ClienteInterface {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer ID;
+
     @Column(length = 100)
     private String NOME;
+    @Column(name = "cpf", length = 11)
+    private String cpf;
+
+    public Cliente(String NOME, String cpf) {
+        this.NOME = NOME;
+        this.cpf = cpf;
+    }
+
+    @JsonIgnore
     @OneToMany(mappedBy = "cliente")
+    @ToString.Exclude
     private Set<Pedido> pedidos;
 
-
-    public Integer getid() {
-        return ID;
-    }
-
-    public Set<Pedido> getPedidos() {
-        return pedidos;
-    }
-
-    public void setPedidos(Set<Pedido> pedidos) {
-        this.pedidos = pedidos;
-    }
-
-    public void setid(Integer id) {
-        this.ID = id;
-    }
-
-    public String getNome() {
-        return NOME;
-    }
-
-    public void setNome(String nome) {
-        NOME = nome;
-    }
-
-    public Cliente() {
-    }
-
-    public Cliente(Integer id, String nome) {
-        this.ID = id;
-        NOME = nome;
-    }
-
-    public Cliente(String nome) {
-        NOME = nome;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "ID=" + ID +
-                ", NOME='" + NOME + '\'' +
-                ", pedidos=" + pedidos +
-                '}';
-    }
 }
+
+

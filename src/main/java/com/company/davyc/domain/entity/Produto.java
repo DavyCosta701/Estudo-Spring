@@ -1,67 +1,40 @@
 package com.company.davyc.domain.entity;
 
+import com.company.davyc.domain.enums.StatusPedido;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
 @Table(name = "produto")
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer ID;
+    @Column(name = "descricao")
     private String Descricao;
-    @Column(length = 20, precision = 2)
+    @Column(name = "preco_unitario",length = 2, precision = 20)
     private BigDecimal Preco_Unitario;
+    @JsonIgnore
 
     public List<ItemPedido> getItensPedido() {
         return itensPedido;
     }
-
     public void setItensPedido(List<ItemPedido> itensPedido) {
         this.itensPedido = itensPedido;
     }
 
     @OneToMany(mappedBy = "produto")
+    @ToString.Exclude
     private List<ItemPedido> itensPedido;
 
-    public Integer getID() {
-        return ID;
-    }
-
-    public void setID(Integer ID) {
-        this.ID = ID;
-    }
-
-    public String getDescricao() {
-        return Descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        Descricao = descricao;
-    }
-
-    public BigDecimal getPreco_Unitario() {
-        return Preco_Unitario;
-    }
-
-    public void setPreco_Unitario(BigDecimal preco_Unitario) {
-        Preco_Unitario = preco_Unitario;
-    }
-
-    public Produto() {
-    }
-
-    public Produto(Integer ID, String descricao, BigDecimal preco_Unitario) {
-        this.ID = ID;
-        Descricao = descricao;
-        Preco_Unitario = preco_Unitario;
-    }
-
-    public Produto(String descricao, BigDecimal preco_Unitario) {
-        Descricao = descricao;
-        Preco_Unitario = preco_Unitario;
-    }
 }

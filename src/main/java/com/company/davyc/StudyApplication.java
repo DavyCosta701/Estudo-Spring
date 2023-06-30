@@ -20,22 +20,9 @@ import java.time.LocalDate;
     public class StudyApplication {
 
     @Bean
-    public CommandLineRunner runner(@Autowired ClientesSD clientes, @Autowired PedidoSD pedidos){
-        return args ->{
-
-            Cliente david = clientes.save(new Cliente("David"));
-
-            //clientes.findAll().forEach(System.out::println);
-            //clientes.findByNOMELike("Another").forEach(System.out::println);
-            //System.out.println(clientes.findOneByNOMEEquals("David"));
-            Pedido pedido = new Pedido();
-            pedido.setCliente(david);
-            pedido.setData_Pedido(LocalDate.now());
-            pedido.setTotal(BigDecimal.valueOf(100));
-            pedidos.save(pedido);
-
-            //System.out.println(clientes.findClienteFetchPedidos(1));
-            pedidos.getPedidosByCliente(david).forEach(System.out::println);
+    public CommandLineRunner run(@Autowired ClientesSD clientesSD){
+        return args -> {
+            clientesSD.save(new Cliente("Javier", "123456" ));
         };
     }
 
