@@ -27,7 +27,8 @@ public class Cliente implements ClienteInterface {
     @NotEmpty(message = "campo.codigo-cliente.obrigatorio")
     private String NOME;
     @Column(name = "cpf", length = 11)
-    @CPF(message = "{}")
+    @CPF(message = "campo.cpf.obrigatorio")
+    @NotEmpty(message = "")
     private String cpf;
 
     public Cliente(String NOME, String cpf) {
