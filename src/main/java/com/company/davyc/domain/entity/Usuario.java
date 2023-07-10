@@ -1,8 +1,8 @@
 package com.company.davyc.domain.entity;
+import lombok.*;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.*;
 
 @Entity
 @Table(name = "usuario")
@@ -16,7 +16,7 @@ import lombok.*;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column
     @NotEmpty(message = "{campo.username.obrigatorio}")

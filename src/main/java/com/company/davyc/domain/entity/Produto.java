@@ -20,7 +20,7 @@ import java.util.List;
 public class Produto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ID;
     @Column(name = "descricao")
     @NotEmpty(message = "Erro de validação, descrição não pode ser nulo")

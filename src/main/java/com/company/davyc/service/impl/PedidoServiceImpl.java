@@ -13,13 +13,15 @@ import com.company.davyc.domain.repository.ProdutoSD;
 import com.company.davyc.exception.BuscaException;
 import com.company.davyc.exception.RegraNegocioException;
 import com.company.davyc.service.PedidoService;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -79,7 +81,7 @@ public class PedidoServiceImpl implements PedidoService{
                             () -> new RegraNegocioException("Pedido Indisponível"))
                     );
                     return itemPedido;
-                }).toList();
+                }).collect(Collectors.toList());
 
     }
 

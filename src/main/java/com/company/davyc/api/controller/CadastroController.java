@@ -3,13 +3,10 @@ package com.company.davyc.api.controller;
 import com.company.davyc.api.DTO.CredencialDTO;
 import com.company.davyc.api.DTO.TokenDTO;
 import com.company.davyc.domain.entity.Usuario;
-import com.company.davyc.domain.repository.LoginSD;
 import com.company.davyc.exception.WrongPasswordException;
 import com.company.davyc.security.jwt.JWTService;
 import com.company.davyc.service.impl.UserServiceImpl;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -26,7 +23,7 @@ public class CadastroController {
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
-    public Usuario save(@Valid @RequestBody Usuario usuario) {
+    public Usuario save(@RequestBody Usuario usuario) {
         return userService.saveUser(usuario);
     }
 

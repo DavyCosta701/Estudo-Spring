@@ -1,6 +1,7 @@
 package com.company.davyc.domain.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ItemPedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ID;
     @ManyToOne
     @JoinColumn(name = "PEDIDO_ID")

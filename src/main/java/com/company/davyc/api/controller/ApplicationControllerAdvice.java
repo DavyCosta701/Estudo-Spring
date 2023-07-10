@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ApplicationControllerAdvice extends ExceptionUtil{
@@ -37,7 +38,7 @@ public class ApplicationControllerAdvice extends ExceptionUtil{
         List<String> errorList =
                 exception.getAllErrors().stream().map(
                 DefaultMessageSourceResolvable::getDefaultMessage
-        ).toList();
+        ).collect(Collectors.toList());
 
         return new APIErrors(errorList);
 

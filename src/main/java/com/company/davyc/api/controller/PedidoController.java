@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/pedidos")
@@ -70,7 +71,7 @@ public class PedidoController {
                     .quantidade(itemPedido.getQuantidade())
                     .valor(itemPedido.getProduto().getPreco_Unitario())
                     .descricao(itemPedido.getProduto().getDescricao())
-                    .build()).toList();
+                    .build()).collect(Collectors.toList());
     }
 
 

@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 import org.hibernate.validator.constraints.br.CPF;
-
 import java.util.Set;
 
 @Entity
@@ -20,9 +19,8 @@ import java.util.Set;
 @AllArgsConstructor
 public class Cliente implements ClienteInterface {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ID;
-
     @Column(length = 100)
     @NotEmpty(message = "campo.codigo-cliente.obrigatorio")
     private String NOME;

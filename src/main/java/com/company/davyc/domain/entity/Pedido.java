@@ -2,6 +2,7 @@ package com.company.davyc.domain.entity;
 
 import com.company.davyc.domain.enums.StatusPedido;
 import jakarta.persistence.*;
+
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -19,7 +20,7 @@ import java.util.Set;
 public class Pedido {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ID;
     @ManyToOne
     @JoinColumn(name = "CLIENTE_ID")
